@@ -16,3 +16,4 @@ out/
 
 # KDE directory preferences
 .directory
+/testFiles/
