@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="FileWordCounter:jar">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="FileWordCounter.jar">
+      <element id="module-output" name="FileWordCounter" />
+      <element id="module-test-output" name="FileWordCounter" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="library" level="project" name="junit" />
+    </root>
+  </artifact>
+</component>
