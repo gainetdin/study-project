@@ -16,4 +16,5 @@ out/
 
 # KDE directory preferences
 .directory
-/testFiles/
+/file-word-counter.jar
+/manifest.mf
