@@ -18,3 +18,4 @@ out/
 .directory
 /file-word-counter.jar
 /manifest.mf
+/target/
