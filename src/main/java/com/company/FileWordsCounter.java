@@ -16,8 +16,6 @@ class FileWordsCounter {
         try (Stream<String> lines = Files.lines(task.getFileName())) {
             String wordToCount = task.getWordToCount();
             wordsNumber = FileWordsCounter.counter(wordToCount, lines);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            logger.error("Specify 2 arguments: \"file path\" \"word to count\"");
         } catch (IOException e) {
             logger.error(e.getMessage());
         }

@@ -1,5 +1,6 @@
 package com.company;
 
+import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,9 +20,42 @@ class FileTask {
     }
 
     static FileTask fromCMD(String[] args) {
-        Path fileName = Paths.get(args[0]);
-        String wordToCount = args[1];
+        //creating flags to input file name and word to count in this file
+        Options options = getFlagsOptions();
+        CommandLineParser cmdParser = new DefaultParser();
+        CommandLine cmdLine = null;
+
+        try {
+            cmdLine = cmdParser.parse(options, args);
+        } catch (ParseException e) {
+            logger.error(e.getMessage());
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp("java -jar FileWordCounter-1.0-SNAPSHOT.jar", options);
+            System.exit(1);
+        }
+
+        Path fileName = Paths.get(cmdLine.getOptionValue("f"));
+        String wordToCount = cmdLine.getOptionValue("w");
+
         return new FileTask(fileName, wordToCount);
+    }
+
+    private static Options getFlagsOptions() {
+        return new Options()
+                .addOption(Option.builder("f")
+                        .required()
+                        .hasArg()
+                        .argName("filename")
+                        .desc("File name")
+                        .longOpt("file")
+                        .build())
+                .addOption(Option.builder("w")
+                        .required()
+                        .hasArg()
+                        .argName("word")
+                        .desc("Word to count")
+                        .longOpt("word")
+                        .build());
     }
 
     public Path getFileName() {
