@@ -1,11 +1,18 @@
 package com.company;
 
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 class FileTask {
 
@@ -14,13 +21,13 @@ class FileTask {
     private final Path fileName;
     private final String wordToCount;
 
-    private FileTask(Path fileName, String wordToCount) {
+    FileTask(Path fileName, String wordToCount) {
         this.fileName = fileName;
         this.wordToCount = wordToCount;
     }
 
-    static FileTask fromCMD(String[] args) {
-        //creating flags to input file name and word to count in this file
+    static FileTask fromCMD(String... args) {
+        //Creating flags parser
         Options options = getFlagsOptions();
         CommandLineParser cmdParser = new DefaultParser();
         CommandLine cmdLine = null;
@@ -40,6 +47,9 @@ class FileTask {
         return new FileTask(fileName, wordToCount);
     }
 
+    /**
+     *  Setting flags options to input file name and word to count in this file
+     */
     private static Options getFlagsOptions() {
         return new Options()
                 .addOption(Option.builder("f")
@@ -69,5 +79,18 @@ class FileTask {
     @Override
     public String toString() {
         return "\"" + wordToCount + "\" word in " + fileName.getFileName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FileTask fileTask = (FileTask) o;
+        return fileName.equals(fileTask.fileName) && wordToCount.equals(fileTask.wordToCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fileName, wordToCount);
     }
 }

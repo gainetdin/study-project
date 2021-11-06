@@ -26,6 +26,7 @@ class FileWordsCounter {
         int wordsNumber;
         String regEx = "[^a-zA-Zа-яА-ЯёЁ0-9]+"; //regex to ignore punctuation marks
         wordsNumber = (int) lines.flatMap(line -> Stream.of(line.split(regEx)))
+                .filter(word -> !word.isEmpty()) //removing empty strings
                 .filter(word -> word.equalsIgnoreCase(wordToCount))
                 .count();
         return wordsNumber;
